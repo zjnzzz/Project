@@ -114,6 +114,7 @@ import= "java.util.List"
   if(user1.equals("teacher"))
   {
   out.print("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好！您是教师用户");
+  session.setAttribute("username",username); 
   out.print("<form action='search0.jsp'>");    
   out.print("<span class='input input--haruki'>"+
 	      "<span class='input input--minoru'>"+

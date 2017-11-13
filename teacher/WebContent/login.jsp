@@ -24,7 +24,6 @@ import= "java.util.List"
 <html lang="zh" class="no-js">
 <head>
 <meta charset="utf-8">
-<title>登录页面</title>
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,37 +37,34 @@ import= "java.util.List"
 </head>
 <body background="bg.jpg">
 <form action="chuli.jsp" method="GET" >    
-<fieldset>
-<legend>登陆界面：</legend>
 </header>
-<section class="content bgcolor-1">
-    <h2 class="nomargin-bottom">选择您的登陆身份</h2>
+<section class="content bgcolor-8">
+    <h2>&nbsp;&nbsp;选择您的登陆身份</h2>
     <select name="user" id="input-4">
             <option value="teacher">教师</option>
             <option value="student">学生</option>
             </select>
     <br/>
-    <span class="input input--haruki">
-        <input class="input__field input__field--haruki" type="text" id="input-1" name="username"/>
-        <label class="input__label input__label--haruki" for="username">
-            <span class="input__label-content input__label-content--haruki">用户名</span>
+    				<span class="input input--isao">
+        <input class="input__field input__field--isao" type="text" id="input-38" name="username"/>
+        <label class="input__label input__label--isao" for="username">
+            <span class="input__label-content input__label-content--isao">用户名</span>
         </label>
     </span>
     <br/>
-    <span class="input input--haruki">
-        <input class="input__field input__field--haruki" type="password" id="input-2" name="password"/>
-        <label class="input__label input__label--haruki" for="password">
-            <span class="input__label-content input__label-content--haruki">密码</span>
+    <span class="input input--isao">
+        <input class="input__field input__field--haruki" type="password" id="input-39" name="password"/>
+        <label class="input__label input__label--isao" for="password">
+            <span class="input__label-content input__label-content--isao">密码</span>
         </label>
     </span>
-    <span class="input input--minoru">
+				    <span class="input input--minoru">
         <input class="input__field input__field--minoru" type="submit" value="登陆" id="input-3" />
         <label class="input__label input__label--minoru" for="input-3">
                 <span class="input__label-content input__label-content--minoru"></span>
         </label>
-     </span>
+        <span>
 </section>
-</fieldset>
 </form>
 </body>
 </html>

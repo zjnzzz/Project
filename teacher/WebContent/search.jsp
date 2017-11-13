@@ -63,15 +63,6 @@ pageEncoding="utf-8"%>
 </style>
     </head>
 <body background="background.jpg">
-<center>
-    <s:form action="">
-        <s:textfield name="username" label="作家名 " /><s:submit value="查询"/>
-    </s:form>
-    </center>
-</table>
-<table border="1">
-<tr bgcolor=yellow>
-    <td>姓名</td>
 <%
       String teachername=request.getParameter("teachername");
       String username=(String)session.getAttribute("username");
@@ -80,6 +71,8 @@ pageEncoding="utf-8"%>
       //String teachername="高会军";
 	  List<String> list4=new LinkedList<String>();
 	  List<String> list5=new LinkedList<String>();
+	  List<String> list6=new LinkedList<String>();
+	  List<String> list7=new LinkedList<String>();
 	  int i=0;
       Connection conn = null;
       Statement stat= null;
@@ -113,6 +106,7 @@ pageEncoding="utf-8"%>
           e.printStackTrace();  
       }  
       String sql="select * from teacher where teacher_name='"+teachername+"'";
+      String sql3="select * from information where teacher_name='"+teachername+"'";
       try
       {
 	   result=stat.executeQuery(sql);
@@ -127,22 +121,34 @@ pageEncoding="utf-8"%>
       {  
    	   String linshi="";
    	   linshi+=result.getString("keyan");
-		   list4.add(linshi);
+	   list4.add(linshi);
       }
       }
       catch (SQLException e)  
       {  
           e.printStackTrace();  
       }  
-      for(String ss2:list4)
+      try
       {
-      	//ss2=new String(ss2.getBytes("ISO-8859-1"),"UTF-8");
-      	out.print(ss2);
+	   result=stat.executeQuery(sql3);
       }
-%>
-<%
-
-	out.print(user);
+      catch (SQLException e)  
+      {  
+          e.printStackTrace();  
+      }  
+      try
+      {
+      while (result.next())  
+      {  
+   	   String linshi2="";
+   	   linshi2+=result.getString("information");
+	   list6.add(linshi2);
+      }
+      }
+      catch (SQLException e)  
+      {  
+          e.printStackTrace();  
+      }  
 %>
 <%
 String[] lianjie;
@@ -167,7 +173,34 @@ while (result.next())
 catch (SQLException e)  
 {  
     e.printStackTrace();  
-}  
+}
+for(int q=0;q<list5.size();q++)
+{
+	String sql4="select * from duiying where teacher_name='"+list5.get(q)+"'";	
+	try
+	{
+	 result=stat.executeQuery(sql4);
+	}
+	catch (SQLException e)  
+	{  
+	    e.printStackTrace();  
+	}  
+	try
+	{
+	while (result.next())  
+	{  
+		   String linshi="";
+		   linshi+=result.getString("name");
+		   list7.add(linshi);
+	}
+	}
+	catch (SQLException e)  
+	{  
+	    e.printStackTrace();  
+	}
+}
+
+/*
 for(String ss2:list5)
 {
 	//ss2=new String(ss2.getBytes("ISO-8859-1"),"UTF-8");
@@ -175,10 +208,19 @@ for(String ss2:list5)
 	out.print("<td bgcolor=yellow>"+ss2+"</td>");
 	out.print("</tr>");
 }
+*/
 %>
 
 <div id="nav">
           <h1 class="tit14">推荐教师</h1>
+<%
+  for(int k=0;k<list5.size();k++)
+  {
+      out.print("<a href=search.jsp?teachername="+list5.get(k)+">"+
+      "<span>"+list7.get(k)+"</span>"+"<br>"+
+      "</a>");
+  }
+%>
 <%
 if (user.equals("student"))
 {
@@ -194,37 +236,8 @@ if (user.equals("student"))
 	  out.print("</section>");
 }
 %>
-          <a href="search.jsp?teachername=def" target="_self" title="郑永挺&nbsp;教授&#10;博士生导师&#10;航天学院&#10;" style="text-decoration:none;">
-            <span>郑永挺</span><br>
-            <span style="cursor:default;color:gray;font-size:12px;">航天学院</span>
-          </a>
-        
-          <a href="http://homepage.hit.edu.cn/caoqingjie" target="_self" title="曹庆杰&nbsp;教授&#10;博士生导师&#10;航天学院&#10;" style="text-decoration:none;">
-            <span>曹庆杰</span><br>
-            <span style="cursor:default;color:gray;font-size:12px;">航天学院</span>
-          </a>
-        
-          <a href="http://homepage.hit.edu.cn/lghit" target="_self" title="刘杨&nbsp;副教授&#10;航天学院&#10;" style="text-decoration:none;">
-            <span>刘杨</span><br>
-            <span style="cursor:default;color:gray;font-size:12px;">航天学院</span>
-          </a>
-        
-          <a href="http://homepage.hit.edu.cn/maping" target="_self" title="马萍&nbsp;教授&#10;博士生导师&#10;航天学院&#10;" style="text-decoration:none;">
-            <span>马萍</span><br>
-            <span style="cursor:default;color:gray;font-size:12px;">控制科学与工程</span>
-          </a>
-        
-          <a href="http://homepage.hit.edu.cn/wangch" target="_self" title="王常虹&#10;博士生导师&#10;航天学院" style="text-decoration:none;">
-            <span>王常虹</span><br>
-            <span style="cursor:default;color:gray;font-size:12px;">控制科学与工程</span>
-          </a>
-        
-          <a href="http://homepage.hit.edu.cn/wangyan2012" target="_self" title="王岩&nbsp;教授&#10;博士生导师&#10;航天学院&#10;学以致用、砥砺前行" style="text-decoration:none;">
-            <span>王岩</span><br>
-            <span style="cursor:default;color:gray;font-size:12px;">控制科学与工程</span>
-          </a>
+
       </div>
-</table>
       <div id="grxxxq">
         <div class="">
           
@@ -233,23 +246,14 @@ if (user.equals("student"))
               <div class="" id="2d2c0759ccae47b7b20edea268149d36" name="基本信息" >
                 <h3 class="tit22"><span class="glyphicon glyphicon-user gr-tittle-img"></span>基本信息</h3>
                 <div class="grxx-text table_biaoge">
-                  
-                    <p>
-	哈尔滨工业大学教授/博导、理学院院长、航天学院智能控制与系统研究所所长；教育部长江学者特聘教授，国家杰出青年基金获得者，IEEE Fellow。
-</p>
-<p>
-	1976年生于黑龙江省集贤县，1995年在陕西第一工业学校中专毕业，1997年自学考试本科毕业，2005年在哈工大获博士学位，同年在哈工大破格晋升为教授。曾在多个国家留学访问。
-</p>
-<p>
-	在网络化控制、光机电一体化装备、机器人智能系统等领域取得创新性研究成果，在IEEE汇刊发表论文100余篇，论文被SCI期刊他引1万余次，他引H因子65，出版英文专著3部，获授权国家发明专利50余项。2014年和2008年两次获得国家自然科学二等奖（分别排名第一和第五）。
-</p>
-<p>
-	目前担任IEEE工业电子学会执委会委员(AdCom Member)、IFAC国际自动控制联合会理事会成员(Council Member)、香港大学荣誉教授。在国际期刊IEEE Trans. Industrial Electronics担任共同主编，并担任Automatica及5个IEEE&nbsp;<span style="line-height:1.5;">Transactions系列汇刊编委，在10余个国际会议上担任大会主席或程序委员会主席。是全球高被引学者，2014年入选汤森路透发布的世界最具影响力科学家榜单。</span>
-</p>
-<p>
-	担任第十二届全国青联常委、第五届中国青年科技工作者协会常务理事、黑龙江省青联副主席。曾获全国先进工作者、中国青年五四奖章、国务院政府特殊津贴等荣誉。
-</p>
-                  
+<%
+   for(int j=0;j<list6.size();j++)
+   {
+	   out.print("<p>");
+	   out.print(list6.get(j));
+	   out.print("</p>");
+   }
+%>                 
                 </div>
               </div>
             </div>
