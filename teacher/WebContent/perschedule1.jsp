@@ -9,18 +9,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <title>日常业务-个人日程</title>
 	<title>日程</title>
-	<link href="css1/style.css" rel="stylesheet" type="text/css" />
-	<link type="text/css" rel="stylesheet" href="css1/jquery/themes/base/jquery.ui.all.css"/>
-	<link rel='stylesheet' href='css1/fullcalendar.css'  />
-	<link rel='stylesheet' href='css1/fullcalendar.print.css'  media='print' />
-	<link rel="stylesheet" href="css1/fancybox/fancybox.css" type="text/css" />
-	<script type="text/javascript" src="js1/jquery.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/jquery-ui-1.10.3.custom.js"></script>
-	<script type="text/javascript" src="js1/fullcalendar.min.js"></script>
-	<script type="text/javascript" src="js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/jquery.form.min.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
-	<script type="text/javascript" src="js1/common/common.js"></script>
+	<link href="heeh/css1/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" rel="stylesheet" href="heeh/css1/jquery/themes/base/jquery.ui.all.css"/>
+	<link rel='stylesheet' href='heeh/css1/fullcalendar.css'  />
+	<link rel='stylesheet' href='heeh/css1/fullcalendar.print.css'  media='print' />
+	<link rel="stylesheet" href="heeh/css1/fancybox/fancybox.css" type="text/css" />
+	<script type="text/javascript" src="heeh/js1/jquery.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery-ui-1.10.3.custom.js"></script>
+	<script type="text/javascript" src="heeh/js1/fullcalendar.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery.form.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
+	<script type="text/javascript" src="heeh/js1/common/common.js"></script>
 	<style type='text/css'>
 		body {
 		margin-left: 200px;

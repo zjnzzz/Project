@@ -24,10 +24,22 @@ import= "java.util.List"
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-<h2>删除成功！</h2>
+</head>
+<body>
 <%
-String id=(String)request.getParameter("id");
-List<String> list4=new LinkedList<String>();
+int id;
+Pattern p = Pattern.compile("\\?");
+String day=(String)(request.getParameter("bday"));
+String startDate=day+" "+(String)(request.getParameter("usr_time1"))+":00";
+String endDate=day+" "+(String)(request.getParameter("usr_time2"))+":00";
+String title=(String)(request.getParameter("title"));
+String content=title;
+String teachername=(String)(session.getAttribute("username"));
+out.print(day);
+out.print(startDate);
+out.print(teachername);
+//String teachername="高会军";
+List<Integer> list4=new LinkedList<Integer>();
 List<String> list5=new LinkedList<String>();
 int i=0;
 Connection conn = null;
@@ -35,6 +47,7 @@ Statement stat= null;
 ResultSet result=null;
 ResultSet result1=null;
 //ResultSet result2=null;
+String sql="select id from calendar";
 try
 {
 Class.forName("com.mysql.jdbc.Driver");
@@ -61,18 +74,64 @@ catch (SQLException e)
 {  
     e.printStackTrace();  
 }  
-String sql="delete from calendar where id="+id;
 try
 {
- stat.executeUpdate(sql);
+ result=stat.executeQuery(sql);
+}
+catch (SQLException e)  
+{  
+    e.printStackTrace();  
+}  
+try
+{
+while (result.next())  
+{  
+list4.add(result.getInt("id"));
+}
+}
+catch (SQLException e)  
+{  
+    e.printStackTrace();  
+}  
+try
+{
+ stat = conn.createStatement();
+}
+catch (SQLException e)  
+{  
+    e.printStackTrace();  
+}  
+if (list4.size()==0)
+{
+	  id=1;
+}
+else
+{
+	  id=list4.size()+1;
+}
+String sql3="insert into calendar(id,title,content,startDate,endDate,isAllDay,teacher_name) values(?,?,?,?,?,?,?)"; 
+Matcher m1=p.matcher(sql3);
+sql3=m1.replaceFirst(String.valueOf(id));
+m1=p.matcher(sql3);
+sql3=m1.replaceFirst('"'+title+'"');
+m1=p.matcher(sql3);
+sql3=m1.replaceFirst('"'+content+'"');
+m1=p.matcher(sql3);
+sql3=m1.replaceFirst('"'+startDate+'"');
+m1=p.matcher(sql3);
+sql3=m1.replaceFirst('"'+endDate+'"'); 
+m1=p.matcher(sql3);
+sql3=m1.replaceFirst("0");
+m1=p.matcher(sql3);
+sql3=m1.replaceFirst('"'+teachername+'"');
+try
+{
+    stat.executeUpdate(sql3);
 }
 catch (SQLException e)  
 {  
     e.printStackTrace();  
 }  
 %>
-</head>
-<body>
-
 </body>
 </html>

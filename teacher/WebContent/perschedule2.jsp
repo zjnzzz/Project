@@ -9,19 +9,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <head>
 <title>日常业务-个人日程</title>
 	<title>日程</title>
-	<link href="css1/style.css" rel="stylesheet" type="text/css" />
-	<link type="text/css" rel="stylesheet" href="css1/jquery/themes/base/jquery.ui.all.css"/>
-	<link rel='stylesheet' href='css1/fullcalendar_2.4/fullcalendar.css'  />
-	<link rel='stylesheet' href='css1/fullcalendar_2.4/fullcalendar.print.css'  media='print' />
-	<link rel="stylesheet" href="css1/fancybox/fancybox.css" type="text/css" />
-	<script type="text/javascript" src="js1/fullcalendar_2.4/jquery.min.js"></script>
-	<script type="text/javascript" src="js1/fullcalendar_2.4/jquery-ui.custom.min.js"></script>
-	<script type="text/javascript" src="js1/fullcalendar_2.4/moment.min.js"></script>
-	<script type="text/javascript" src="js1/fullcalendar_2.4/fullcalendar.min.js"></script>
-	<script type="text/javascript" src="js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/jquery.form.min.js"></script>
-	<!--<script type="text/javascript" src="js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
-	--><script type="text/javascript" src="js1/common/common.js"></script>
+	<link href="heeh/css1/style.css" rel="stylesheet" type="text/css" />
+	<link type="text/css" rel="stylesheet" href="heeh/css1/jquery/themes/base/jquery.ui.all.css"/>
+	<link rel='stylesheet' href='heeh/css1/fullcalendar.css'  />
+	<link rel='stylesheet' href='heeh/css1/fullcalendar.print.css'  media='print' />
+	<link rel="stylesheet" href="heeh/css1/fancybox/fancybox.css" type="text/css" />
+	<script type="text/javascript" src="heeh/js1/jquery.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery-ui-1.10.3.custom.js"></script>
+	<script type="text/javascript" src="heeh/js1/fullcalendar.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery.form.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
+	<script type="text/javascript" src="heeh/js1/common/common.js"></script>
 	<style type='text/css'>
 		body {
 		margin-left: 200px;
@@ -61,14 +60,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		          	week: '周',  
 		          	day: '日'  
 	          	},  
-	          	eventLimit: true,
-	          	views: {
+	           	editable: false,
+	           	eventLimit: true,
+	           	views: {
 			        agenda: {
 			            eventLimit: 2 // adjust to 6 only for agendaWeek/agendaDay
 			        }
 			    },
-	           	editable: true,
-	           	events:function(start, end, timezone, callback) { //在日历中的天显示相应日程
+	           	events:function(start, end, callback) { //在日历中的天显示相应日程
 		           	var urlR ="toJson_ForCalandar.action";//后台查询日程，返回json格式
 		           	$.ajax({  
 			            url: urlR,
@@ -90,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			                    var evtend=(ev.evtend!=null)?formatJson2(ev.evtend,'yyyy-MM-dd'):null;
 			                    //var evtstart=ev.startDate;
 			                    //var evtend=ev.endDate;
-			                     events.push({   //设置在日历中的天显示相应日程的样式
+			                    events.push({   //设置在日历中的天显示相应日程的样式
 			                        title:title,  
 			                        start:evtstart,  
 			                        end:evtend,  
@@ -132,13 +131,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					'width':540,
 					'height':360
 	            });
-			 },dayClick:function(date, jsEvent, view, resourceObj){	//点击天事件
+			 },dayClick:function(date, allDay, jsEvent, view){	//点击天事件
 				  //$(this).css({color: "red", background: "blue" });
 	         	  //$(this).removeClass("ui-widget-content");
 	         	alert('点击天事件');
 	         	//window.location.href=baseURL+"/listCategory.do?appType=HDOA_GRRC";
-	         	//var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
-	         	var selDate =formatJson2(date,'yyyy-MM-dd');
+	         	var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
 	         	//重置页面数据
 	         	resetPage();
 	         	$("#startdate").val(selDate);

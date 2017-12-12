@@ -151,6 +151,18 @@ import= "java.util.List"
 	   +"</span>");
   out.print("</form>");
   out.print("</section>");
+  out.print("</section>");
+  out.print("<form action='edit2.jsp'>");    
+  out.print("<span class='input input--haruki'>"+
+	      "<span class='input input--minoru'>"+
+	      "<input class='input__field input__field--minoru' type='submit' value='查询预约申请' id='input-3' />"+
+	      "<label class='input__label input__label--minoru' for='input-3'>"+
+	              "<span class='input__label-content input__label-content--minoru'></span>"+
+	      "</label>"
+	   +"</span>");
+  out.print("</form>");
+  out.print("</section>");
+
   }
   }
   else

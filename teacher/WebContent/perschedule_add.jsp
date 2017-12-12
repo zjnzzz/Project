@@ -20,13 +20,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-	<link href="css1/jquery/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
-	<link href="css1/fancybox/fancybox.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="js1/jquery.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/jquery-ui.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/jquery.form.min.js"></script>
-	<script type="text/javascript" src="js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
+	<link href="heeh/css1/jquery/themes/base/jquery.ui.all.css" rel="stylesheet" type="text/css" />
+	<link href="heeh/css1/fancybox/fancybox.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="heeh/js1/jquery.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery-ui.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery.form.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			$(".datepicker").datepicker({

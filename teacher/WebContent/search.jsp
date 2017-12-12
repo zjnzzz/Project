@@ -174,6 +174,8 @@ catch (SQLException e)
 {  
     e.printStackTrace();  
 }
+
+/*
 for(int q=0;q<list5.size();q++)
 {
 	String sql4="select * from duiying where teacher_name='"+list5.get(q)+"'";	
@@ -199,6 +201,7 @@ for(int q=0;q<list5.size();q++)
 	    e.printStackTrace();  
 	}
 }
+*/
 
 /*
 for(String ss2:list5)
@@ -217,14 +220,14 @@ for(String ss2:list5)
   for(int k=0;k<list5.size();k++)
   {
       out.print("<a href=search.jsp?teachername="+list5.get(k)+">"+
-      "<span>"+list7.get(k)+"</span>"+"<br>"+
+      "<span>"+list5.get(k)+"</span>"+"<br>"+
       "</a>");
   }
 %>
 <%
 if (user.equals("student"))
 {
-	  out.print("<form action='yuyue.jsp'>");    
+	  out.print("<form action='perschedule4.jsp'>");    
 	  out.print("<span class='input input--haruki'>"+
 		      "<span class='input input--minoru'>"+
 		      "<input class='input__field input__field--minoru' type='submit' value='预约教师' id='input-3' />"+

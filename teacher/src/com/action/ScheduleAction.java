@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -15,9 +16,26 @@ import org.apache.struts2.ServletActionContext;
 import com.entity.Schedule;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import org.apache.struts2.ServletActionContext;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
 
 public class ScheduleAction extends ActionSupport {
 	private List<Schedule> list;
+	private List<Schedule> list22;
 	private HttpServletRequest request;
 	private Map<String,Object> session;
 	private Map<String, Object> dataMap;
@@ -34,7 +52,7 @@ public class ScheduleAction extends ActionSupport {
 		if(list==null) list=new ArrayList<Schedule>();
 		dataMap=new HashMap<String, Object>();
 		dataMap.put("status", 0);
-		//»ñÈ¡²ÎÊı
+		//è·å–å‚æ•°
 		SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
 		Schedule sch=new Schedule();
 		try {
@@ -74,12 +92,12 @@ public class ScheduleAction extends ActionSupport {
 			list=new ArrayList<Schedule>();
 			SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			try {
-				list.add(new Schedule(this.getMaxId()+1,"²âÊÔ1", "²âÊÔ1", df.parse("2015-11-02 12:30:00"), df.parse("2015-11-02 13:30:00"), 1,getRandomColor()));
-				list.add(new Schedule(this.getMaxId()+1,"²âÊÔ11", "²âÊÔ11", df.parse("2015-11-02 14:00:00"), df.parse("2015-11-02 14:30:00"), 1,getRandomColor()));
-				list.add(new Schedule(this.getMaxId()+1,"²âÊÔ2", "²âÊÔ2", df.parse("2015-11-10 12:30:00"), df.parse("2015-11-10 13:30:00"), 0,getRandomColor()));
-				list.add(new Schedule(this.getMaxId()+1,"²âÊÔ3", "²âÊÔ3", df.parse("2015-11-20 12:30:00"), df.parse("2015-11-20 13:30:00"), 1,getRandomColor()));
-				list.add(new Schedule(this.getMaxId()+1,"²âÊÔ4", "²âÊÔ4", df.parse("2015-11-30 12:30:00"), df.parse("2015-11-30 13:30:00"), 0,getRandomColor()));
-				list.add(new Schedule(this.getMaxId()+1,"²âÊÔ5", "²âÊÔ5", df.parse("2015-12-02 12:30:00"), df.parse("2015-12-02 13:30:00"), 1,getRandomColor()));
+				list.add(new Schedule(this.getMaxId()+1,"æµ‹è¯•1", "æµ‹è¯•1", df.parse("2015-11-02 12:30:00"), df.parse("2015-11-02 13:30:00"), 1,getRandomColor()));
+				list.add(new Schedule(this.getMaxId()+1,"æµ‹è¯•11", "æµ‹è¯•11", df.parse("2015-11-02 14:00:00"), df.parse("2015-11-02 14:30:00"), 1,getRandomColor()));
+				list.add(new Schedule(this.getMaxId()+1,"æµ‹è¯•2", "æµ‹è¯•2", df.parse("2015-11-10 12:30:00"), df.parse("2015-11-10 13:30:00"), 0,getRandomColor()));
+				list.add(new Schedule(this.getMaxId()+1,"æµ‹è¯•3", "æµ‹è¯•3", df.parse("2015-11-20 12:30:00"), df.parse("2015-11-20 13:30:00"), 1,getRandomColor()));
+				list.add(new Schedule(this.getMaxId()+1,"æµ‹è¯•4", "æµ‹è¯•4", df.parse("2015-11-30 12:30:00"), df.parse("2015-11-30 13:30:00"), 0,getRandomColor()));
+				list.add(new Schedule(this.getMaxId()+1,"æµ‹è¯•5", "æµ‹è¯•5", df.parse("2015-12-02 12:30:00"), df.parse("2015-12-02 13:30:00"), 1,getRandomColor()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -93,13 +111,47 @@ public class ScheduleAction extends ActionSupport {
 			list=(List<Schedule>) this.getSession().get("list");
 			if(list==null) list=new ArrayList<Schedule>();
 			dataMap=new HashMap<String, Object>();
+			list22=new ArrayList<Schedule>();
 			dataMap.put("status", 0);
-			
+			String teachername="é«˜ä¼šå†›";
 			String action=this.getRequest().getParameter("action");
-			//»ñÈ¡ÈÕ³Ì°²ÅÅ
+			SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			//è·å–æ—¥ç¨‹å®‰æ’
 			Schedule sch=this.getSchedule(action);
+			Connection conn = null;
+			Statement stat= null;
+			//ResultSet result2=null;
+			try
+			{
+			Class.forName("com.mysql.jdbc.Driver");
+			}
+			catch (ClassNotFoundException e)  
+			 {  
+			     e.printStackTrace();  
+			 }  
+			//Ò»ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ï¿½İ¿ï¿½  
+			String url = "jdbc:mysql://localhost:3306/aa"; 
+			try
+			{
+			 conn = DriverManager.getConnection(url, "root", "6021328614");
+			}
+			catch (SQLException e)  
+			{  
+			    e.printStackTrace();  
+			} 
+			try
+			{
+			 stat = conn.createStatement();
+			}
+			catch (SQLException e)  
+			{  
+			    e.printStackTrace();  
+			}  
+			String sql="delete from calendar where teacher_name='"+teachername+"'";
 			if("add".equals(action)){
 				list.add(sch);
+				list22=list;
+				request.setAttribute("list22",list22);
 			}else{
 				if(list!=null && list.size()>0){
 					for(int i=0;i<list.size();i++){
@@ -112,9 +164,10 @@ public class ScheduleAction extends ActionSupport {
 					}
 				}
 			}
-			this.getSession().put("list", list);
+		    this.getSession().put("list", list);
 			dataMap.put("status", 1);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			dataMap.put("msg", e.getMessage());
 		}
@@ -165,7 +218,7 @@ public class ScheduleAction extends ActionSupport {
 	}
 	
 	/**
-	 * »ñÈ¡Ö÷¼üID
+	 * è·å–ä¸»é”®ID
 	 * @return
 	 */
 	private int getMaxId(){
@@ -173,7 +226,7 @@ public class ScheduleAction extends ActionSupport {
 	}
 	
 	/**
-	 * Ëæ»úÉú³ÉÑÕÉ«
+	 * éšæœºç”Ÿæˆé¢œè‰²
 	 * @return
 	 */
 	private String getRandomColor(){

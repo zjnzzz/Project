@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <html>
     
     <head>
@@ -5,12 +7,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>如何获取系统日期</title>
-    <body>
+   <body>
         <br/>
         <br/>
         <br/>
-        <img style="position:absolute;left:0px;top:0px;width:100%;height:100%;z-Index:-1; border:0px solid rgb(255, 0, 221)" src="bg1.jpg" />
-        <form>
+        <img style="position:absolute;left:0px;top:0px;width:100%;height:100%;z-Index:-1; border:0px solid rgb(255, 0, 221)" />
+        <form action="add2.jsp" method="post">
         <script language="javascript" type="text/javascript">
           
             var now= new Date();
@@ -26,13 +28,13 @@
             document.write("日期：<input type='date' name='bday' min="+time+">");
           </script>
           </br>
-          时间段：
+          <p>时间段：
           <input type="time" name="usr_time1">到
-          <input type="time" name="usr_time2">
-         </br>
-          <input type="submit" value="预约">
+          <input type="time" name="usr_time2"></p>
+        <p>&nbsp;事件内容: <input type="text" name="title"></p>
+          <input type="submit" value="增加">
           </form>
-          <iframe src="https://calendar.google.com/calendar/embed?src=zjnqaq%40gmail.com&ctz=Asia/Shanghai" style="border: 2" width="400" height="300" frameborder="2" scrolling="no"></iframe>
+   
     </body>
     
     </html>

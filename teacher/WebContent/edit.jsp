@@ -27,10 +27,19 @@ import= "java.util.List"
 修改事件:</br>
 </head>
 <%
-  String thingid=(String)request.getParameter("thingid");
-  List<String> list4=new LinkedList<String>();
+  int id;
+  String id2=(String)(request.getParameter("id"));
+  String title=null;
+  String content=null;
+  String startDate=null;
+  String endDate=null;
+  int isAllDay=0;
+  String teachername=null;
+  String username=null;
+  List<Integer> list4=new LinkedList<Integer>();
   List<String> list5=new LinkedList<String>();
   int i=0;
+  Pattern p = Pattern.compile("\\?");
   Connection conn = null;
   Statement stat= null;
   ResultSet result=null;
@@ -62,7 +71,8 @@ import= "java.util.List"
   {  
       e.printStackTrace();  
   }  
-  String sql="select * from richeng where thingid='"+thingid+"'";
+  out.print(id2);  
+  String sql="select * from qingqiu where id="+String.valueOf(id2);
   try
   {
    result=stat.executeQuery(sql);
@@ -75,25 +85,87 @@ import= "java.util.List"
   {
   while (result.next())  
   {  
-	   String linshi="";
-	   linshi+=result.getString("thing");
-   list4.add(linshi);
+	   title=result.getString("title");
+	   content=title;
+	   startDate=result.getString("startDate");
+	   endDate=result.getString("endDate");
+	   isAllDay=0;
+	   username=result.getString("username");
+	   teachername=result.getString("teacher_name");
+	   
   }
   }
   catch (SQLException e)  
   {  
       e.printStackTrace();  
   }  
-  out.print(list4.get(0));
+  try
+  {
+   result1=stat.executeQuery("select id from calendar");
+  }
+  catch (SQLException e)  
+  {  
+      e.printStackTrace();  
+  } 
+  try
+  {
+  while (result1.next())  
+  {  
+  list4.add(result1.getInt("id"));
+  }
+  }
+  catch (SQLException e)  
+  {  
+      e.printStackTrace();  
+  }  
+  try
+  {
+   stat = conn.createStatement();
+  }
+  catch (SQLException e)  
+  {  
+      e.printStackTrace();  
+  }  
+  if (list4.size()==0)
+  {
+  	  id=1;
+  }
+  else
+  {
+  	  id=Collections.max(list4)+1;
+  }
+  String sql3="insert into calendar(id,title,content,startDate,endDate,isAllDay,teacher_name) values(?,?,?,?,?,?,?)"; 
+  String sqll="delete from qingqiu where id="+id2;
+  Matcher m1=p.matcher(sql3);
+  sql3=m1.replaceFirst(String.valueOf(id));
+  m1=p.matcher(sql3);
+  sql3=m1.replaceFirst('"'+title+'"');
+  m1=p.matcher(sql3);
+  sql3=m1.replaceFirst('"'+content+'"');
+  m1=p.matcher(sql3);
+  sql3=m1.replaceFirst('"'+startDate+'"');
+  m1=p.matcher(sql3);
+  sql3=m1.replaceFirst('"'+endDate+'"'); 
+  m1=p.matcher(sql3);
+  sql3=m1.replaceFirst("0");
+  m1=p.matcher(sql3);
+  sql3=m1.replaceFirst('"'+teachername+'"');
+  try
+  {
+      stat.executeUpdate(sql3);
+  }
+  catch (SQLException e)  
+  {  
+      e.printStackTrace();  
+  }  
+  try
+  {
+      stat.executeUpdate(sqll);
+  }
+  catch (SQLException e)  
+  {  
+      e.printStackTrace();  
+  }  
 %>
-<form action="" method="GET" >    
-<%
-out.print("<input type='text' name='thing'"+"value="+list4.get(0)+"/>");
-session.setAttribute("thingid",thingid); 
-%>
-<br />
-<br/>
-<input type="submit" value="修改" />
-</form>
 </body>
 </html>

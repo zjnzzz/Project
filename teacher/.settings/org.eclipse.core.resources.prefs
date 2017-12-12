@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//WebContent/edit.jsp=UTF-8
 encoding//WebContent/login.jsp=UTF-8
+encoding//WebContent/perschedule4.jsp=UTF-8
 encoding//WebContent/search.jsp=UTF-8
 encoding//WebContent/search0.jsp=ISO-8859-1
 encoding//WebContent/yuyue.jsp=UTF-8
+encoding//src/com/action/ScheduleAction.java=UTF-8

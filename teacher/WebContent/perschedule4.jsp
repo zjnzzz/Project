@@ -1,29 +1,130 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" 
+import="java.util.*" 
+import="java.lang.Integer"
+import="java.util.LinkedList,java.util.List"
+import="java.sql.Connection"
+import="java.sql.DriverManager"
+import="java.sql.ResultSet"
+import="java.sql.Statement"
+import="java.util.Collections"
+import="java.util.LinkedList"
+import="java.util.List"
+import="java.util.regex.Matcher"
+import= "java.util.regex.Pattern"
+import= "javax.servlet.ServletRequest"
+import= "javax.servlet.http.HttpServletRequest"
+import= "javax.servlet.http.HttpSession"
+import= "org.apache.struts2.ServletActionContext"
+import= "java.sql.PreparedStatement"
+import= "java.sql.ResultSet"
+import= "java.sql.SQLException"
+import= "java.sql.Statement"
+import= "java.util.List"
+import= "com.entity.Schedule"
+import= "java.text.SimpleDateFormat"
+import="java.lang.Integer"
+pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
+<%
+List<Integer> list1=new LinkedList<Integer>();
+List<String> list2=new LinkedList<String>();
+List<String> list3=new LinkedList<String>();
+List<String> list4=new LinkedList<String>();
+List<String> list5=new LinkedList<String>();
+List<Integer> list6=new LinkedList<Integer>();
+String teachername=(String)(session.getAttribute("teachername"));
+List<Schedule> list=new ArrayList<Schedule>();
+SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+int i=0;
+Connection conn = null;
+Statement stat= null;
+ResultSet result=null;
+ResultSet result1=null;
+//ResultSet result2=null;
+try
+{
+Class.forName("com.mysql.jdbc.Driver");
+}
+catch (ClassNotFoundException e)  
+ {  
+     e.printStackTrace();  
+ }  
+//һ��ʼ������һ���Ѿ����ڵ����ݿ�  
+String url = "jdbc:mysql://localhost:3306/aa"; 
+try
+{
+ conn = DriverManager.getConnection(url, "root", "6021328614");
+}
+catch (SQLException e)  
+{  
+    e.printStackTrace();  
+} 
+try
+{
+ stat = conn.createStatement();
+}
+catch (SQLException e)  
+{  
+    e.printStackTrace();  
+}  
+String sql="select * from calendar where teacher_name='"+teachername+"'";
+try
+{
+ result=stat.executeQuery(sql);
+}
+catch (SQLException e)  
+{  
+    e.printStackTrace();  
+}  
+try
+{
+while (result.next())  
+{  
+	   list1.add(result.getInt("id"));
+	   list2.add(result.getString("title"));
+	   list3.add(result.getString("content"));
+	   list4.add(result.getString("startDate"));
+	   list5.add(result.getString("endDate"));
+	   list6.add(result.getInt("isAllDay"));
+}
+}
+catch (SQLException e)  
+{  
+    e.printStackTrace();  
+}  
+for(i=0;i<list1.size();i++)
+{
+	list.add(new Schedule(i,list2.get(i), list3.get(i), df.parse(list4.get(i)), df.parse(list5.get(i)), list6.get(i),"red"));
+}
+session.setAttribute("list",list);
+%>
+<%
+
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 <title>日常业务-个人日程</title>
 	<title>日程</title>
 	<link href="css1/style.css" rel="stylesheet" type="text/css" />
-	<link type="text/css" rel="stylesheet" href="css1/jquery/themes/base/jquery.ui.all.css"/>
-	<link rel='stylesheet' href='css1/fullcalendar_2.4/fullcalendar.css'  />
-	<link rel='stylesheet' href='css1/fullcalendar_2.4/fullcalendar.print.css'  media='print' />
-	<link rel="stylesheet" href="css1/fancybox/fancybox.css" type="text/css" />
-	<script type="text/javascript" src="js1/jquery.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/jquery-ui-1.10.3.custom.js"></script>
-	<script type="text/javascript" src="js1/fullcalendar_2.4/moment.min.js"></script>
-	<script type="text/javascript" src="js1/fullcalendar_2.4/fullcalendar.min.js"></script>
-	<script type="text/javascript" src="js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/jquery.form.min.js"></script>
-	<script type="text/javascript" src="js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
-	<script type="text/javascript" src="js1/common/common.js"></script>
-	<script type="text/javascript" src="js1/common/jquery-ui.dialog.extend.js"></script>
-	<style type='text/css'>
+	<link type="text/css" rel="stylesheet" href="heeh/css1/jquery/themes/base/jquery.ui.all.css"/>
+	<link rel='stylesheet' href='heeh/css1/fullcalendar_2.4/fullcalendar.css'  />
+	<link rel='stylesheet' href='heeh/css1/fullcalendar_2.4/fullcalendar.print.css'  media='print' />
+	<link rel="stylesheet" href="heeh/css1/fancybox/fancybox.css" type="text/css" />
+	<script type="text/javascript" src="heeh/js1/jquery.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery-ui-1.10.3.custom.js"></script>
+	<script type="text/javascript" src="heeh/js1/fullcalendar_2.4/moment.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/fullcalendar_2.4/fullcalendar.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/fancybox/jquery.fancybox-1.3.1.pack.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/jquery.form.min.js"></script>
+	<script type="text/javascript" src="heeh/js1/jqueryui/lan/jquery.ui.datepicker-zh-CN.js"></script>
+	<script type="text/javascript" src="heeh/js1/common/common.js"></script>
+	<script type="text/javascript" src="heeh/js1/common/jquery-ui.dialog.extend.js"></script>
+	<style type='text/css'>			
 		body {
 		margin-left: 200px;
 		text-align: center;
@@ -38,6 +139,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	</style>
 	<!-- font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif; -->
+	    <body>
+        <br/>
+        <br/>
+        <br/>
+        <img style="position:absolute;left:0px;top:0px;width:100%;height:100%;z-Index:-1; border:0px solid rgb(255, 0, 221)" />
+        <form action="yuyue.jsp" method="post">
+        <script language="javascript" type="text/javascript">
+          
+            var now= new Date();
+          
+            var year=now.getFullYear();
+          
+            var month=now.getMonth();
+          
+            var datee=now.getDate();
+              
+            var time;
+            time=year+"-"+(month+1)+"-"+datee;
+            document.write("日期：<input type='date' name='bday' min="+time+">");
+          </script>
+          </br>
+          <p>时间段：
+          <input type="time" name="usr_time1">到
+          <input type="time" name="usr_time2"></p>
+        <p>&nbsp;事件内容: <input type="text" name="title"></p>
+          <input type="submit" value="预约">
+          </form>
+   
+    </body>
 	<script type="text/javascript">
 		var fancybox1;
 	    $(document).ready(function() {
@@ -215,7 +345,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  <div style="display:none">
  	<!-- 添加和编辑页面 -->
  	<div class="fancy" id="inlineUpdate"> 
-	    <h3>新建事件</h3> 
+	    <h3>新建事件</h3>
 	    <form id="add_form" action="updateSchedule_ForCalandar.action" method="post"> 
 		    <input type="hidden" id="action" name="action" value="add" /> 
 		    <input type="hidden" id="sid" name="id" value="" /> 
@@ -277,7 +407,5 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</table> 
 	</div>
  </div>
- 
- 
  </body>
 </html>
